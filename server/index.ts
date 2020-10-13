@@ -1,6 +1,6 @@
-import { createServer } from 'http'
-import { parse } from 'url'
 import next from 'next'
+import express from 'express'
+// import { Response, Request } from 'express'
 
 const port = parseInt(process.env.PORT || '3000', 10)
 const dev = process.env.NODE_ENV !== 'production'
@@ -8,23 +8,22 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url!, true)
-    const { pathname, query } = parsedUrl
+  const server = express()
 
-    if (pathname === '/a') {
-      app.render(req, res, '/a', query)
-    } else if (pathname === '/b') {
-      app.render(req, res, '/b', query)
-    } else {
-      handle(req, res, parsedUrl)
-    }
-  }).listen(port)
+  // server.get('/a', (req: Request, res: Response) => {
+  //   return app.render(req, res, '/a')
+  // })
 
-  // tslint:disable-next-line:no-console
-  console.log(
-    `> Server listening at http://localhost:${port} as ${
-      dev ? 'development' : process.env.NODE_ENV
-    }`
-  )
+  // server.get('/b', (req: Request, res: Response) => {
+  //   return app.render(req, res, '/b')
+  // })
+
+  server.all('*', (req, res) => {
+    return handle(req, res)
+  })
+
+  server.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`> Server listening at http://localhost:${port} as ${dev ? 'development' : process.env.NODE_ENV}`)
+  })
 })

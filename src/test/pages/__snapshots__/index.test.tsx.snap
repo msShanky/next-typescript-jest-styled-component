@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home page matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="pages__Container-sc-86lw4u-0 jRQwTN"
+  >
+    <div>
+      <p>
+        This is the left panel
+      </p>
+    </div>
+    <div>
+      <p>
+        This is the canvas
+      </p>
+    </div>
+    <div>
+      <p>
+        This is properties panel
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
